@@ -1,4 +1,4 @@
 UrbanBike
 =========
 
-Real-time bicycling check-in system.
+Extremely simple real-time bicycling check-in system.
