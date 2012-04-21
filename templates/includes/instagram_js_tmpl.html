@@ -1,0 +1,15 @@
+{% load commontags %}    
+{% raw %}
+<script type="text/js-template" id="instagram-template">
+    <figure class="cap-bot">
+	<a href="#map_canvas" title="Show on map">    
+	    <img src="${images.thumbnail.url}" alt="${user.username}" title="Show on map"/>
+	    <figcaption class="cap-bot">
+		<strong>@${user.username}</strong>
+		{{ if caption }}<p>${caption.text}</p>{{ /if}}  
+		<i class="small">${moment(created_time).fromNow()}</i>
+	    </figcaption>
+	</a>	
+    </figure>
+</script>
+{% endraw %}

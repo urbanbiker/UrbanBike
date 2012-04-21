@@ -1,0 +1,12 @@
+{% load humanize %}
+<div class="wrapper">
+    <strong>{{ checkin.full_name }}</strong> <span>{{ checkin.timestamp|naturaltime }}</span>
+    <figure>
+	<a class="checkin" href="#">
+	    <img src="{{ checkin.avatar }}" alt="{{ checkin.full_name }}" title="Click to see on map"/>
+	</a>
+    </figure>
+    <span>
+	{{ checkin.street }}
+    </span>
+</div>

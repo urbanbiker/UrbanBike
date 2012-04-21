@@ -1,0 +1,159 @@
+<!doctype html>
+<!--[if lt IE 9]><html class="ie"><![endif]-->
+<!--[if gte IE 9]><!--><html><!--<![endif]-->
+	
+	<head>
+		<meta charset="utf-8"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+		
+		<title>{% block title %}Urban Bike | Real-time bicycling check-in system | Home Page{% endblock %}</title>
+			
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		
+		<!--[if lt IE 9]>
+			<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+		{% if TEMPLATE_DEBUG %}
+		    <link rel="stylesheet/less" href="{{ STATIC_URL }}frameless/main.less" type="text/css" />
+		{% else %}
+		    <link rel="stylesheet" href="{{ STATIC_URL }}frameless/main.css">
+		{% endif %}		
+
+		<link rel="shortcut icon" href="{{ STATIC_URL }}favicon.png"/>
+		<link rel="apple-touch-icon" sizes="114x114" href="{{ STATIC_URL }}icon.png"/>
+		
+		<meta name="description" content="Simple real-time bicycling check-in system. Make yourself visible on map."/>
+		{% block extra_head %}{% endblock %}
+	</head>
+	
+    <body lang="en">
+	<header id="masthead">
+	    <h1><a href="/" title="Home">UrbanBike</a></h1>
+	    <p>Real-time bicycling check-in system.</p>
+	    <nav id="nav">
+		<ul>
+		    {% if user.is_authenticated %}
+		    <li>
+			<a id="do-checkin" href="{% url checkin %}">
+			    <div class="icon">
+				<img src="{{ STATIC_URL }}img/Location.png" style="bachground:white;"/>
+			    </div>
+			    <span>Locate</span>
+			</a>
+		    </li>
+		    {% else %}
+		    <li>
+			<a href="/facebook/login" title="Login via Facebook">
+			    <div class="icon">
+				f
+			    </div>
+			    <span>Login</span>
+			</a>
+		    </li>
+		    {% endif %}
+		    <li>
+			<a href="#tweets" title="Biking Tweets near you">
+			    <div class="icon">
+				t
+			    </div>
+			    <span>Tweets</span>
+			</a>
+		    </li>
+		    <li>
+			<a href="#instagrs" title="Recent Instagram photos at your location">
+			    <div class="icon">
+				i
+			    </div>
+			    <span>Instagr</span>
+			</a>
+		    </li>		    
+		    <li>
+			<a href="#faq">
+			    <div class="icon">
+				?
+			    </div>
+			    <span>FAQ</span>
+			</a>
+		    </li>
+		</ul>
+	    </nav>
+	</header>
+		
+	<article>
+	    
+	    <header id="introduction">
+		<h1>Want to know who is cycling now? <span>Dislike mobile calls? Just make yourself visible on map.</span></h1>
+	    </header>
+			
+	    <figure>
+		{% block google_map %}
+		{% endblock %}
+	    </figure>
+			
+	    <div class="container">
+		{% block main_content %}
+		{% endblock %}
+		<section id="faq">
+		    <h2>Features &amp; FAQs</h2>
+		    
+		    <h3>What about Mobile App?</h3>
+		    
+		    <p>This web-site has fluid grid layout (not to be confused with <a href="http://www.webdesignshock.com/responsive-web-design/" target="blank">"Responsive layout"</a>) and it easely could be used on your mobile phone or tablet. Resize your browser window to see the magic.</p>
+		    
+		    <h3>How long each "check-in" lives?</h3>
+		    
+		    <p>Public lifetime of each check-in is One Day, but we don't delete them, and your private check-in log should be always avaliable only for you. It's coming soon.</p>
+
+		    <h3>What does Login via Facebook do?</h3>
+		    <p>It requests you email and public info. We hate spam, and your email address is used only for associating your person in our system. We'll not post any messages on your wall.</p>
+
+                    <h3>Why it does not allow to login via Twitter?</h3>		    
+		    <p>We are working on that. Login via Twitter, Foursquare and Instagram is coming soon.</p>		    
+		</section>
+	    </div>	    
+	</article>
+			
+	<footer id="colophon">
+	    <section id="follow">
+		<h1><span>Follow <a target="blank" href="http://twitter.com/urbanbikeme/">@urbanbikeme</a> on Twitter</span> for more real-time stuff.</h1>
+	    </section>
+	    <section id="author">
+		<h2>Powered by</h2>
+		<img src="{{ STATIC_URL }}icon.png" alt="Icon" />
+		<p>
+                    <a target="blank" href="http://framelessgrid.com">Frameless</a> &mdash; 
+		    A non-fluid grid for adaptive web desig.<br/>		    
+                    Made by <a target="blank" href="http://jonikorpi.com/">Joni Korpi</a> &mdash; A Finnish web designer.<br/>		
+		</p>
+	    </section>	
+	    <section id="promo">
+		<h2>Also Checkout</h2>
+		<img src="{{ STATIC_URL }}img/ggs.png" alt="Icon" />
+		<p><a target="blank" href="http://goldengridsystem.com/">Golden Grid System</a> &mdash; 
+		    A fluid-width CSS grid system for responsive web design.</p>
+	    </section>	
+	    <section id="copyright">
+		<p>
+		    We are running <a target="blank" href="https://www.djangoproject.com/">Django 1.4</a> and <a target="blank" href="http://www.mongodb.org/">MongoDB 2.0.4</a>.<br/>
+		    &copy; Urban Bike 2012.
+		</p>
+		
+	    </section>
+	    
+	</footer>
+
+	<script src="{{ STATIC_URL }}js/jquery-1.7.1.min.js"></script>
+	{% if TEMPLATE_DEBUG %}
+	    <script src="{{ STATIC_URL }}js/less.js"></script>
+	{% endif %}
+
+	{% block extra_script %}{% endblock %}
+  <script>
+    var _gaq=[['_setAccount','{{ GA_UID }}'],['_trackPageview']];
+    (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+    g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+    s.parentNode.insertBefore(g,s)}(document,'script'));
+  </script>
+	</body>
+	
+</html>

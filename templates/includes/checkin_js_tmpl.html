@@ -1,0 +1,17 @@
+{% load commontags %}    
+{% raw %}
+<script type="text/js-template" id="checkin-template">
+    <div class="wrapper">
+	<h4>${full_name}</h4> 
+	<i class="small" style="float:right;">${moment(timestamp).fromNow()}</i>
+	<figure>
+	    <a class="checkin" href="#map_canvas">
+		<img src="${avatar}" alt="${full_name}" title="Show on Map"/>
+	    </a>
+	</figure>
+	<p>
+	    ${street}
+	</p>
+    </div>
+</script>
+{% endraw %}

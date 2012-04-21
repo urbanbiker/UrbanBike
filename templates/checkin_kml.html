@@ -1,0 +1,13 @@
+<div class="wrapper">
+    <h4>{{obj.full_name}}{{ obj.user.username }} {{ obj.from_user_name }}</h4>
+    <i class="small" style="float:right;">{{ obj.timestamp|time }}{{ obj.created_time|time }}{{ obj.created_at|time }}</i>	
+    <figure>	
+	<img src="{{ obj.avatar }}{{ obj.profile_image_url }}{{ obj.profile_image_url }}{{ obj.user.profile_picture }}" style="width:48px;"/>
+    </figure>	    
+    <p>
+	{{ obj.street }}
+	{{ obj.text }}
+        {{ obj.bio }}
+        {{ obj.caption.text }}
+    </p> 
+</div> 

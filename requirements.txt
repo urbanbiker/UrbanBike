@@ -1,0 +1,4 @@
+-e git+https://github.com/ryanmark/django_facebook_oauth.git#egg=facebook
+python-instagram
+tweepy
+django-cities

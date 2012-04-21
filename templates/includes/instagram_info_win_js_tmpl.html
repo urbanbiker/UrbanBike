@@ -1,0 +1,16 @@
+{% load commontags %}    
+{% raw %}
+<script type="text/js-template" id="instagram-info-template">
+    <div class="wrapper">
+	<strong>${user.username}</strong> <i class='small'>${moment(created_time).fromNow()}</i>
+	<figure>
+	    <a class="checkin" href="#">
+		<img src="${user.profile_picture}" alt="${user.username}" style="width:50px;" title="Close"/>
+	    </a>
+	</figure>
+	<p>
+	    {{ if user.bio }}${user.bio}{{ /if}}
+	</p>
+    </div>
+</script>
+{% endraw %}

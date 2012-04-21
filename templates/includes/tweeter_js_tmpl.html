@@ -1,0 +1,17 @@
+{% load commontags %}    
+{% raw %}
+<script type="text/js-template" id="twitter-template">
+    <div class="wrapper">
+	<h4><a target="blank" title="${from_user}" href="http://twitter.com/${from_user}">${from_user_name}</a></h4>
+	<i class="small" style="float:right;">${moment(created_at).fromNow()}</i>	
+	<figure>
+	    {{ if geo }}<a class="tweet" href="#map_canvas">{{ /if }}
+		<img src="${profile_image_url}" style="width:50px;" alt="${from_user}" title="Show on Map"/>
+	    {{ if geo }}</a>{{ /if }}
+	</figure>
+	<p>
+	    {{html twttr.txt.autoLink(text)}}
+	</p>
+    </div>
+</script>
+{% endraw %}

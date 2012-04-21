@@ -1,0 +1,15 @@
+settings_local.py
+*.pyc
+.DS_Store
+*.db
+data
+src
+*.orig
+.ropeproject
+*~
+media/.cache
+media/cache
+media/upload
+*.bundle.css
+*.bundle.js
+.venv
