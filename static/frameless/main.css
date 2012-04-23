@@ -179,6 +179,10 @@ h4 {
   font-size: 2.588235294117647em;
   line-height: 1.0909090909090908em;
 }
+.less_huge {
+  font-size: 1.8823529411764706em;
+  line-height: 1.0909090909090908em;
+}
 .enormous {
   font-size: 4.235294117647059em;
   line-height: 1em;
@@ -321,7 +325,7 @@ p,
   color: #FFFFFF;
   text-shadow: 3px 2px 0 #000000, -3px 2px 0 #000000, 3px -2px 0 #000000, -3px -2px 0 #000000, 4px 1px 0 #000000, -4px 1px 0 #000000, 4px -1px 0 #000000, -4px -1px 0 #000000;
 }
-h1 a {
+#masthead h1 a {
   border-bottom: none;
 }
 /*
@@ -344,7 +348,13 @@ h1 a {
   color: #e84c38;
 }
 /* UrbanBike */
+#tweets h2 {
+  width: auto;
+}
 #twitter_logo {
+  float: right;
+}
+#twitter_logo img {
   width: 4.235294117647059em;
 }
 #loading-spin {
@@ -783,7 +793,7 @@ article section,
   }
   #author,
   #promo {
-    width: 15.529411764705882em;
+    width: 15.294117647058824em;
     float: left;
   }
   #author {
@@ -824,13 +834,13 @@ article section,
     position: absolute;
     left: 16.941176470588236em;
     top: 2.823529411764706em;
-    width: 11.294117647058824em;
+    width: 15.529411764705882em;
   }
   #nav {
     top: 1.411764705882353em;
   }
   #introduction h1 {
-    font-size: 2.588235294117647em;
+    font-size: 1.8823529411764706em;
     line-height: 1.0909090909090908em;
   }
   #grid {
