@@ -101,6 +101,9 @@
                  this.geocoder = new google.maps.Geocoder();
                  this.checkinsView = new CheckinListView({collection: new Checkins(this.options.checkins)});
                  this.checkinsView.render();
+                 if (this.options.locate_me) {
+                     this.doCheckin();
+                 }
              },
 
              doCheckin: function() {

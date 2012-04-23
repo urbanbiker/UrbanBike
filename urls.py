@@ -9,9 +9,9 @@ urlpatterns = patterns('',
     (r'^admin/', include(admin.site.urls)),
     (r'^instagram/', include('instagr.urls')),
     (r'^twitter/', include('twitter.urls')),
-    url(r'^facebook/login$', 'facebook.views.login'),
-    url(r'^facebook/authentication_callback$', 'facebook.views.authentication_callback'),
-    url(r'^logout$', 'django.contrib.auth.views.logout', {'next_page': '/'}),
+    url(r'^facebook/login$', 'facebook.views.login', name='facebook-login'),
+    url(r'^facebook/authentication_callback$', 'facebook.views.authentication_callback', name='facebook-callback'),
+    url(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page': '/'}, name='logout'),
     (r'', include('checkins.urls')),
 )
 

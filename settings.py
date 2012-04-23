@@ -175,7 +175,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "checkins.context_processors.development_settings",
 )
 
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/?locate-me'
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
 # the site admins on every HTTP 500 error.

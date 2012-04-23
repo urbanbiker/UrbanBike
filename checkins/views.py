@@ -93,6 +93,7 @@ def get_city(request, country_slug, city_slug):
 
 @render_to('index.html')
 def homepage(request, country_slug=None, city_slug=None):
+    locate_me = 'locate-me' in request.GET
     location = get_location(request)
     city = get_city(request, country_slug, city_slug)
     center = [city.location[1], city.location[0]]
@@ -127,6 +128,7 @@ def locate(request):
     else:
         data = json.dumps({'error': 'Use POST.'})
     return HttpResponse(data)
+
 
 
 def checkins(request, checkin_id=None):

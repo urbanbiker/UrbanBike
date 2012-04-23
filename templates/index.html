@@ -1,15 +1,15 @@
 {% extends 'frameless.html' %}
 {% load commontags %}
 
-{% block title %} {{ city.name }} | UrbanBike {% endblock %}
+{% block title %}{{ city.name }}, {{ city.country.name }}{% endblock %}
 
 {% block main_content %}
 <section>
-    <h2>Cycling People in {{ city.name }} </h2>
+    <h2>Bike traces in {{ city.name }}, {{ city.country.name }} </h2>
     <div id="checkin_list">
 	{% if not checkins %}
 	    <p id="empty-message">
-		Hey, looks like there are no today's checkins in this area. {% if user.is_authenticated %}You can do <a id="do-checkin" href="{% url checkin %}">the first one</a>!{% else %}You can <a href="/facebook/login">login via Facebook</a> and do the first one.{% endif %}
+		Hey, it seems there's nobody here today. <a href="{% if user.is_authenticated %}{% url checkin %}{% else %}{% url facebook-login %}{% endif %}">You can be the first!</a>
 	    </p>
 	{% endif %}
 	{% include 'includes/checkin_js_tmpl.html' %}
@@ -17,21 +17,16 @@
 </section>
 
 <section id="tweets">
-    <h2>{{ city.name }}'s Biking Tweets </h2>
+    <h2> Biking Tweets in this area </h2>
     <div id="twitter-feed" class="clearfix">
 	{% include 'includes/tweeter_js_tmpl.html' %}
 	{% include 'includes/loading_spin.html' %}	
     </div>
-    <div class="clearfix">
-	<a target="blank" href="http://twitter.com/">
-	    <img id="twitter_logo" align="right" src="{{ STATIC_URL }}img/logo_twitter_withbird_1000_white_blue.png"/>
-	</a>
-    </div>    
 </section>
 
 <section id="instagrs">
-    <h2>The Most Recent Photos. </h2>
-    <p>These photos are not necessarily related to biking but they should give an real-time picture what's happening at {{ city.name }} in a radical hipster style. </p>    
+    <h2>The Most Recent Photos </h2>
+    <p>These photos are not necessarily related to biking but they should give a real-time picture what's happening at {{ city.name }} city in a radical hipster manner. </p>    
     <div id="instagram-photos" class="clearfix">
         {% include 'includes/loading_spin.html' %}	
 	<canvas id="kenburns"></canvas>
@@ -91,14 +86,15 @@
 		  center: {{ center|safe }},
                   checkins: {{ checkins_json|safe }},
                   geo_rss_url: 'http://urbanbike.me{% url kml %}?lat={{ center.0 }}&lng={{ center.1 }}',
+                  locate_me: {{ locate_me|yesno:"true,false" }}
               });
 
     	  var instagram_app = new window.InstagramApp({
-                    center: {{ center|safe }},
+                    center: {{ center|safe }}
                });
 
     	  var twitter_app = new window.TwitterApp({
-                    center: {{ center|safe }},
+                    center: {{ center|safe }}
                });
       });
 </script>

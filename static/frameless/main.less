@@ -160,6 +160,11 @@ body {
 	line-height: 48/44*1em;
 }
 
+.less_huge {
+	font-size: 32/@em;
+	line-height: 48/44*1em;
+}
+
 .enormous {
 	font-size: 72/@em;
 	line-height: 72/72*1em;
@@ -320,8 +325,8 @@ h1, h2, h3, p, #nav li {
 			4px -1px 0 #000000, -4px -1px 0 #000000;
 }
 		
-h1 a {
-          border-bottom: none;
+#masthead h1 a {
+  border-bottom: none;
 }
 
 /*
@@ -349,8 +354,20 @@ h1 a {
 }
 
 /* UrbanBike */
+#tweets h2 {
+  width: auto;
+}
+
+
+h2.twitter-logo {
+  //background: url(static/img/logo_twitter_withbird_1000_white_blue.png) no-repeat right center;
+}
+
 #twitter_logo {
-  width: (@gutter/@em)+@1col;
+  float: right;
+  img {
+    width: (@gutter/@em)+@1col;
+    }
 }
 
 #loading-spin {
@@ -822,7 +839,7 @@ h1 a {
 	}
 	
 	#author, #promo {
-		width: @4cols;
+		width: @4cols - 4/@em;
 		float: left;
 	}
 	
@@ -869,7 +886,7 @@ h1 a {
 		#masthead p {
 			position: absolute;
 			left: (24/@em)+@4cols; top: 48/@em;
-			width: @3cols;
+			width: @4cols;
 		}
 	
 		#nav {
@@ -877,7 +894,7 @@ h1 a {
 		}
 			
 	#introduction h1 {
-		.huge();
+		.less_huge();
 	}
 		
 	#grid {
