@@ -1,0 +1,37 @@
+{% extends 'frameless.html' %}
+{% load commontags %}
+
+{% block title %}Record Bike-Trace{% endblock %}
+
+{% block main_content %}
+    <section id="trace">
+	<h2>Record Bike-Trace</h2>
+	<a href="#" id="start-record">Start Record</a><br/>
+	<a href="#" id="stop-record">Stop Record</a>		
+    </section>
+{% endblock %}
+
+
+{% block google_map %}
+    <div id="map_canvas"></div>
+{% endblock %}
+
+
+{% block extra_script %}
+<script src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_API_KEY }}&sensor=false" type="text/javascript"></script>
+<script src="{{ STATIC_URL }}js/underscore-min.js"></script>
+<script src="{{ STATIC_URL }}js/backbone-min.js"></script>
+<script src="{{ STATIC_URL }}js/backbone-localstorage.js"></script>
+<script src="{{ STATIC_URL }}js/traces.js"></script>
+<script type="text/javascript">
+    $(function(){
+	  var trace_app = new window.TraceApp({
+                  uuid: '{{ trace.uuid }}',
+                  fire_start: false,
+                  points: {{ points|safe }},
+                  center: {{ center|safe }}    
+              });
+      });
+</script>
+
+{% endblock %}

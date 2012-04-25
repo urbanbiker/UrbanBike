@@ -128,6 +128,7 @@ gettext = lambda s: s
 LANGUAGES = (
     ('en', gettext('English')),
 )
+
 USE_TZ = True
 
 INSTALLED_APPS = (
@@ -149,6 +150,7 @@ INSTALLED_APPS = (
     'django_extensions',
     'sorl.thumbnail',
     'continents',
+    'traces',
 )
 
 CACHES = {
