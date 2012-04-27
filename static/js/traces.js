@@ -24,7 +24,7 @@
 
      var Points = Backbone.Collection.extend({
              model: Point,
-             localStorage: new Backbone.LocalStorage("SomeCollection"),
+             localStorage: new Backbone.LocalStorage("PointCollection"),
              initialize: function(options) {
                  this.options = options;
              }                                                    
@@ -34,68 +34,126 @@
      var TraceView = Backbone.View.extend(
          {
              events: {
-                 "click #start-record": "start_record",
-                 "click #stop-record": "stop_record"
+                 "click a": "toggle_record"
+             },
+
+             toggle_record: function(){
+                 if (this.status == 'off'){
+                     this.status = 'on';
+                     this.start_record();
+                     this.el.find('span').text("pause ||");
+                     this.el.find('a').css({'background': '#171717'});
+                     this.el.find('a').hover(
+                         function(){
+                             $(this).css('background', '#E84C38');
+                         },
+                         function(){
+                             $(this).css('background', '#171717');
+                         });
+
+                 } else {
+                     this.status = 'off';
+                     this.stop_record();
+                     this.el.find('span').text("continue >>");
+                     this.el.find('a').css({background: '#E84C38'});
+                     this.el.find('a').hover(
+                         function(){
+                             $(this).css('background', '#171717');
+                         },
+                         function(){
+                             $(this).css('background', '#E84C38');
+                         });
+
+                 }
+                 
+                 return false;
              },
 
              initialize: function() {
-                 this.cache = new Points();
-                 //this.geocoder = new google.maps.Geocoder();
-             },                                               
-         
-             
-             render_collection: function(collection) {
                  var self = this;
-                 var coords = [];
-                 collection.each(function(model, index){
-                                     coords.push(new google.maps.LatLng(
-                                                     model.get('lat'), 
-                                                     model.get('lng')));
-                                 });
-                 var the_path = new google.maps.Polyline(
-                     {
-                         path: coords
-                     });
-                 the_path.setMap(this.options.map);
-                 if (coords.length){
-                     this.options.map.setCenter(coords[0]);    
-                 }
+                 this.el = $(this.el);
+                 this.status = 'off';
+                 //this.collection.bind('add', this.track_change);
+                 this.map = window.gmaps.map;
+                 this.geocoder = new google.maps.Geocoder();
+                 this.polyline = new google.maps.Polyline({map: this.map, path: []});
+                 this.infowindow = new google.maps.InfoWindow();
                  
-                 
-                 return this.el;
+                 $(window).bind('beforeunload', function() {
+                                    if (this.status == 'on'){
+                                        self.toggle_record();
+                                    }
+                                }); 
+             },                                               
+             
+             track_change: function() {
              },
 
-             render_marker: function(coords) {                 
-                 var beachMarker = new google.maps.Marker(
+             renderInfoWindow: function(model) {
+                 var self = this;
+                 var location = new google.maps.LatLng(
+                     model.get('lat'),  model.get('lng'));
+                 
+                 var marker = new google.maps.Marker(
                      {
-                         position: coords,
-                         map: this.options.map
+                         map: this.map,
+                         position: location
                      });
+                 this.geocoder.geocode({
+                         'latLng': location
+                     }, 
+                     function(results, status) {
+                         if (status == google.maps.GeocoderStatus.OK) {
+                             var content = results[0].formatted_address;
+                             model.set({formatted_address: results[0].formatted_address});
+                             content += "<br/>" + moment(model.get['timestamp']).format("MMM Do, h:mm:ss a");
+                             self.infowindow.setPosition(location);
+                             self.infowindow.setContent(content);
+                             self.infowindow.open(self.map);
+                         } 
+                     });
+                 this.map.setCenter(location);
+                 this.map.setZoom(18);
+                 
+             },
+
+             render: function() {
+                 var self = this;
+                 var the_path = this.polyline.getPath();
+                 this.collection.each(function(model, index) {
+                     the_path.push(new google.maps.LatLng(model.get('lat'),  model.get('lng')));
+                 });
+                 this.polyline.setPath(the_path);
+
+                 if (this.collection.length > 0) {
+                     this.renderInfoWindow(this.collection.at(
+                                           this.collection.length -1));
+                 }
+                 return this.el;
              },
                           
              start_record: function() {
                  var self = this;
-                 this.watchId = navigator.geolocation.watchPosition(
-                     function(position) {
-                         var the_point = self.cache.create(
-                             {lat: position.coords.latitude,
-                              lng: position.coords.longitude,
-                              speed: position.coords.longitude,
-                              timestamp: position.timestamp}); 
-                         var lat_lng = new google.maps.LatLng(position.coords.latitude,
-                                                              position.coords.longitude);
-                         self.render_marker(lat_lng);
-                     });
-                 return false;
+                 this.updater = $.periodic(function() {
+                                               navigator.geolocation.getCurrentPosition(
+                                                   function(position) {
+                                                       var model = self.collection.create(
+                                                           {lat: position.coords.latitude,
+                                                            lng: position.coords.longitude,
+                                                            speed: position.coords.longitude,
+                                                            timestamp: position.timestamp}); 
+                                                       if (self.collection.length == 1) {
+                                                           self.renderInfoWindow(model);
+                                                       }
+                                                   });
+                                           });
              },
                           
              stop_record: function() {
-                 navigator.geolocation.clearWatch(this.watchId);
-                 this.render_collection(this.cache);
-                 this.model.save({points: this.cache.toJSON()});
-                 this.collection.add(this.cache);
-                 this.cache.reset([]);
-                 return false;
+                 this.updater.cancel();
+                 this.render();
+                 this.model.save({points: this.collection.toJSON()});
+                 this.collection.reset([]);
              }
          });
 
@@ -104,34 +162,16 @@
              initialize: function(){
                  var trace = new Trace({id: this.options.uuid});
                  var points = new Points(this.options.points);
-                 
                  var view = new TraceView({model: trace,
                                            collection: points,
-                                           map:  this.init_map(), 
-                                           el: '#trace'});
-                 view.render_collection(points);
+                                           el: '#nav'});
+                 view.render();
                  if (this.options.fire_start){
-                     view.start_record();
+                     view.toggle_record();
                  }
                      
-             },
-
-             init_map: function(){
-                 var center = new google.maps.LatLng(
-                     this.options.center[0], 
-		     this.options.center[1]);
-                 var myOptions = {
-		     zoom: 15,
-		     center: center,
-		     mapTypeId: google.maps.MapTypeId.HYBRID,
-		     mapTypeIds: [google.maps.MapTypeId.HYBRID]
-                 };
-                 var map = new google.maps.Map(document.getElementById('map_canvas'),
-					       myOptions);
-                 var bikeLayer = new google.maps.BicyclingLayer();
-                 bikeLayer.setMap(map);
-                 return map;
              }
+
          });
      
 })();

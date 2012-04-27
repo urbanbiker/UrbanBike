@@ -1,16 +1,32 @@
 from django.shortcuts import get_object_or_404, redirect
 from django.http import HttpResponseRedirect, HttpResponse
+from django.core.urlresolvers import reverse
 from django.utils import simplejson as json
 from traces.models import Trace
 from annoying.decorators import render_to
-
+from datetime import datetime
 from checkins.views import get_location
- 
+
+def get_traces(request):
+    if request.user.is_authenticated():
+        return Trace.objects.filter(user=request.user)
+    elif 'traces' in request.session:
+        return Trace.objects.filter(uuid__in=request.session['traces'])
+    return []
+
+
+@render_to('traces/index.html')
+def index(request):
+    center = get_location(request)
+    traces = get_traces(request)
+    return locals()
+    
+    
 @render_to('traces/trace_object.html')
 def trace_object(request, trace_uuid):
     trace = get_object_or_404(Trace, uuid=trace_uuid)
     center = get_location(request)
-
+    fire_start = 'fire_start' in request.GET
     db = Trace.mongo_objects.db
     traces_mongo = db.find_one(dict(uuid=trace.uuid))
     if request.method == 'PUT':
@@ -19,9 +35,19 @@ def trace_object(request, trace_uuid):
             traces_mongo = dict(uuid=trace.uuid, points=[])
             db.insert(traces_mongo)
         traces_mongo['points'].extend(trace_dict['points'])
+        if not trace.title:
+            addresses = filter(lambda x: x.get('formatted_address', None), traces_mongo['points'])
+            if addresses:
+                the_time = datetime.utcfromtimestamp(traces_mongo['points'][0]['timestamp']/1000)
+                trace.title = '%s ~ %s' % (addresses[0]['formatted_address'], 
+                                           the_time.strftime('%a %b %d, %X'))
+                trace.save()
+            trace.save()
+
         db.save(traces_mongo)
         return HttpResponse('ok')
 
+    traces = get_traces(request)
     points = traces_mongo and traces_mongo['points'] or []
     points = json.dumps(points)
     return locals()
@@ -42,7 +68,7 @@ def trace_list(request):
 def start_record(request):
     is_authenticated = request.user.is_authenticated()
     if is_authenticated:
-        kwargs = dict(user=request.user.user)
+        kwargs = dict(user=request.user)
     else:
         kwargs = {}
     trace = Trace.objects.create(**kwargs)
@@ -51,5 +77,5 @@ def start_record(request):
         traces.append(trace.uuid)
         request.session['traces'] = traces
     Trace.mongo_objects.db.insert(dict(uuid=trace.uuid, points=[]))
-    return redirect(trace_object, trace_uuid=trace.uuid)
+    return HttpResponseRedirect(reverse('trace-object', args=[trace.uuid]) + '?fire_start')
     

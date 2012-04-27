@@ -37,6 +37,19 @@ class Trace(TimeStampedModel):
 
     mongo_objects = MongoDBTraceManager()
 
+    def center(self):
+        try:
+            first_point = Trace.mongo_objects.db.find_one(
+                dict(uuid=self.uuid))['points'][0]
+            return '%s,%s' % (first_point['lat'], first_point['lng'])
+        except IndexError:
+            pass
+
+    def points(self):
+        obj = Trace.mongo_objects.db.find_one(dict(uuid=self.uuid))
+        return 'color:0x0000ff|weight:5|' + '|'.join([','.join((str(p['lat']), str(p['lng']))) for p in obj['points']])
+
+
     def __unicode__(self):
         return self.title or self.uuid
 
