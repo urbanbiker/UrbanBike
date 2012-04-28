@@ -261,7 +261,7 @@ a {
   border-bottom: 0.06470588235294118em solid #171717;
 }
 #nav a {
-  border: 0;
+  border: 0.11764705882352941em solid #171717;
 }
 #copyright a {
   color: #616161;
@@ -274,7 +274,11 @@ a:hover,
 }
 #nav a:hover,
 #downloads a:hover strong {
-  background: #171717;
+  background: #e84c38;
+  -webkit-transition: background-color 0.382s ease-out;
+  -moz-transition: background-color 0.382s ease-out;
+  -ms-transition: background-color 0.382s ease-out;
+  transition: background-color 0.382s ease-out;
 }
 a:active {
   color: #616161;
@@ -352,7 +356,7 @@ article section,
 #nav a {
   display: block;
   text-align: center;
-  background: #e84c38;
+  background: #171717;
   color: #ffffff;
 }
 #nav .icon {
@@ -600,42 +604,6 @@ article section,
 #copyright {
   padding: 1.411764705882353em 0 2.823529411764706em;
 }
-#colophon figure.item {
-  display: block;
-  position: relative;
-  float: left;
-  width: 11.294117647058824em;
-  margin: 0.47058823529411764em 0.7058823529411765em 0 0;
-}
-#colophon figure.item img {
-  width: 100%;
-}
-#colophon figure.item a {
-  border-bottom: none;
-}
-#colophon figure.item:hover:before {
-  opacity: 0;
-}
-#colophon figure.item:hover figcaption {
-  opacity: 1;
-  left: 0;
-}
-#colophon figure.item:last-child {
-  margin: 0.7058823529411765em 0 0 0;
-}
-#colophon figure.item figcaption {
-  position: absolute;
-  background: rgba(0, 0, 0, 0.35);
-  color: white;
-  padding: 5px 10px;
-  opacity: 0;
-  bottom: 0;
-  left: -30%;
-  -webkit-transition: all 0.6s ease;
-  -moz-transition: all 0.6s ease;
-  -ms-transition: all 0.6s ease;
-  transition: all 0.6s ease;
-}
 /*
 	Old IE fixes
 	http://jonikorpi.com/leaving-old-IE-behind/
@@ -713,6 +681,17 @@ article section,
   .col22 {
     background: #e8e8e8;
   }
+  #colophon figure.item {
+    display: block;
+    width: 15.529411764705882em;
+    margin: 1.0588235294117647em 1.411764705882353em 0 0;
+  }
+  img {
+    width: 100%;
+  }
+  a {
+    border-bottom: none;
+  }
 }
 /*
 	Wide mobile layout 
@@ -744,6 +723,32 @@ article section,
   }
   #build figure {
     height: 11.294117647058824em;
+  }
+  #colophon figure.item {
+    position: relative;
+    float: left;
+    width: 11.294117647058824em;
+    margin: 0.47058823529411764em 0.7058823529411765em 0 0;
+  }
+  #colophon figure.item:hover:before {
+    opacity: 0;
+  }
+  #colophon figure.item:hover figcaption {
+    opacity: 1;
+    left: 0;
+  }
+  #colophon figure.item figcaption {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.35);
+    color: white;
+    padding: 5px 10px;
+    opacity: 0;
+    bottom: 0;
+    left: -30%;
+    -webkit-transition: all 0.6s ease;
+    -moz-transition: all 0.6s ease;
+    -ms-transition: all 0.6s ease;
+    transition: all 0.6s ease;
   }
 }
 /*
@@ -809,6 +814,10 @@ article section,
   }
   #copyright {
     clear: both;
+  }
+  #colophon figure.item {
+    width: 15.529411764705882em;
+    margin: 0.47058823529411764em 0.7058823529411765em 0 0;
   }
 }
 /*
@@ -889,6 +898,10 @@ article section,
   }
   #copyright {
     padding-left: 16.941176470588236em;
+  }
+  #colophon figure.item {
+    width: 11.294117647058824em;
+    margin: 0.47058823529411764em 1.0588235294117647em 0 0;
   }
 }
 @media screen and (min-width: 57em) and (max-width: 117.9375em) {
