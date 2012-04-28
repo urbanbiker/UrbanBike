@@ -1,9 +1,9 @@
 {% extends 'traces/index.html' %}
 {% load commontags %}
 
-{% block title %}Bike-Trace Recording {% endblock %}
+{% block title %}Recording Trace{% endblock %}
 {% block h1 %}Keep moving, we're recording your GPS trace. {% endblock %}
-
+{% block trace_button %}continue trace{% endblock %}
 {% block extra_script %}
 {{ block.super }}
 <script src="{{ STATIC_URL }}js/backbone-localstorage.js"></script>

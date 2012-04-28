@@ -41,27 +41,27 @@
                  if (this.status == 'off'){
                      this.status = 'on';
                      this.start_record();
-                     this.el.find('span').text("pause ||");
-                     this.el.find('a').css({'background': '#171717'});
+                     this.el.find('span').text("pause || stop");
+                     this.el.find('a').css({'background': '#E84C38'});
                      this.el.find('a').hover(
                          function(){
-                             $(this).css('background', '#E84C38');
+                             $(this).css('background', '#171717');
                          },
                          function(){
-                             $(this).css('background', '#171717');
+                             $(this).css('background', '#E84C38');
                          });
 
                  } else {
                      this.status = 'off';
                      this.stop_record();
-                     this.el.find('span').text("continue >>");
-                     this.el.find('a').css({background: '#E84C38'});
+                     this.el.find('span').text("continue trace");
+                     this.el.find('a').css({background: '#171717'});
                      this.el.find('a').hover(
                          function(){
-                             $(this).css('background', '#171717');
+                             $(this).css('background', '#E84C38');
                          },
                          function(){
-                             $(this).css('background', '#E84C38');
+                             $(this).css('background', '#171717');
                          });
 
                  }
@@ -113,7 +113,7 @@
                          } 
                      });
                  this.map.setCenter(location);
-                 this.map.setZoom(18);
+                 this.map.setZoom(14);
                  
              },
 
@@ -134,21 +134,31 @@
                           
              start_record: function() {
                  var self = this;
-                 this.updater = $.periodic(function() {
-                                               navigator.geolocation.getCurrentPosition(
-                                                   function(position) {
-                                                       var model = self.collection.create(
-                                                           {lat: position.coords.latitude,
-                                                            lng: position.coords.longitude,
-                                                            speed: position.coords.longitude,
-                                                            timestamp: position.timestamp}); 
-                                                       if (self.collection.length == 1) {
-                                                           self.renderInfoWindow(model);
-                                                       }
-                                                   });
-                                           });
+                 var model_dict = {};
+                 this.updater = $.periodic(
+                     function() {
+                         navigator.geolocation.getCurrentPosition(
+                             function(position) {
+                                 if (position.coords.latitude != model_dict.lat && position.coords.longitude != model_dict.lng) {
+                                     model_dict = {lat: position.coords.latitude,
+                                                   lng: position.coords.longitude,
+                                                   speed: position.coords.longitude,
+                                                   timestamp: position.timestamp};
+                                     var model = self.collection.create(model_dict); 
+                                     if (self.collection.length == 1) {
+                                         self.renderInfoWindow(model);
+                                     }
+                                 }
+                             }, 
+                             function() {
+                                 //error handler here.
+                             },
+                             {
+                                 enableHighAccuracy: true
+                             }
+                         );
+                     });
              },
-                          
              stop_record: function() {
                  this.updater.cancel();
                  this.render();

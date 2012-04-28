@@ -5,14 +5,14 @@ from django.utils import simplejson as json
 from traces.models import Trace
 from annoying.decorators import render_to
 from datetime import datetime
-from checkins.views import get_location
+from checkins.views import get_location, MongoJSONEncoder
 
 def get_traces(request):
     if request.user.is_authenticated():
-        return Trace.objects.filter(user=request.user)
+        return Trace.objects.filter(user=request.user).order_by('-created')
     elif 'traces' in request.session:
-        return Trace.objects.filter(uuid__in=request.session['traces'])
-    return []
+        return Trace.objects.filter(uuid__in=request.session['traces']).order_by('-created')
+    return Trace.objects.none()
 
 
 @render_to('traces/index.html')
@@ -34,20 +34,21 @@ def trace_object(request, trace_uuid):
         if not traces_mongo:
             traces_mongo = dict(uuid=trace.uuid, points=[])
             db.insert(traces_mongo)
-        traces_mongo['points'].extend(trace_dict['points'])
-        if not trace.title:
-            addresses = filter(lambda x: x.get('formatted_address', None), traces_mongo['points'])
-            if addresses:
-                the_time = datetime.utcfromtimestamp(traces_mongo['points'][0]['timestamp']/1000)
-                trace.title = '%s ~ %s' % (addresses[0]['formatted_address'], 
-                                           the_time.strftime('%a %b %d, %X'))
-                trace.save()
-            trace.save()
+        if 'points' in trace_dict:
+            traces_mongo['points'].extend(trace_dict['points'])
+            if not trace.title:
+                addresses = filter(lambda x: x.get('formatted_address', None), traces_mongo['points'])
+                if addresses:
+                    trace.where_start = addresses[0]['formatted_address']
+                    trace.title = '%s ~ %s' % (trace.where_start, 
+                                               trace.created.strftime('%a %b %d, %X'))
+                    trace.save()
+                    trace.save()
 
-        db.save(traces_mongo)
-        return HttpResponse('ok')
+            db.save(traces_mongo)
+        return HttpResponse(json.dumps(traces_mongo, cls=MongoJSONEncoder))
 
-    traces = get_traces(request)
+    traces = get_traces(request).exclude(pk=trace.pk)
     points = traces_mongo and traces_mongo['points'] or []
     points = json.dumps(points)
     return locals()

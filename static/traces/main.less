@@ -253,7 +253,7 @@ a {
 }
 
 	#nav a {
-		border: 0;
+		border: 2/@em solid @emphasis;
 	}
 	
 	#copyright a {
@@ -267,7 +267,8 @@ a:hover, #copyright a:hover {
 }
 
 	#nav a:hover, #downloads a:hover strong {
-		background: @emphasis;
+		background: @link;
+                .transition(background-color 0.382s ease-out)
 	}
 
 
@@ -354,7 +355,7 @@ h1, h2, h3, p, #nav li {
 	#nav a {
 		display: block;
 		text-align: center;
-  		background: @link;
+  		background: @emphasis;
 		color: @background;
 
 	}
@@ -550,40 +551,6 @@ h1, h2, h3, p, #nav li {
 		padding: 24/@em 0 48/@em;
 	}
 
-        #colophon figure.item {
-             display: block;
-             position: relative;
-             float:left;
-             width: @3cols;
-             margin: 8/@em 12/@em 0 0;
-
-  img {
-    width: 100%;
-  }
-  a{
-    border-bottom: none;
-    }
-  &:hover:before {
-    opacity: 0;
-    }
-  &:hover figcaption {
-    opacity: 1;
-    left: 0;
-    }
-  &:last-child {
-    margin: 12/@em 0 0 0;
-    }
-  figcaption {
-    position: absolute;
-    background: rgba(0,0,0,0.35);
-    color: white;
-    padding: 5px 10px;
-    opacity: 0;
-    bottom: 0;
-    left: -30%;
-    .transition(all 0.6s ease);
-    }
-}
 
 
 /*
@@ -674,6 +641,18 @@ h1, h2, h3, p, #nav li {
 	.col3, .col4, .col21, .col22 {
 		background: @highlight;
 	}
+
+        #colophon figure.item {
+             display: block;
+             width: @4cols;
+             margin: 18/@em 24/@em 0 0;
+    }
+  img {
+    width: 100%;
+  }
+  a{
+    border-bottom: none;
+    }
 	
 }
 
@@ -709,6 +688,33 @@ h1, h2, h3, p, #nav li {
 	#build figure {
 		height: @3cols;
 	}
+
+        #colophon figure.item {
+             position: relative;
+             float:left;
+             width: @3cols;
+             margin: 8/@em 12/@em 0 0;
+
+             &:hover:before {
+             opacity: 0;
+             }
+
+             &:hover figcaption {
+             opacity: 1;
+             left: 0;
+             }
+             figcaption {
+             position: absolute;
+             background: rgba(0,0,0,0.35);
+             color: white;
+             padding: 5px 10px;
+             opacity: 0;
+             bottom: 0;
+             left: -30%;
+             .transition(all 0.6s ease);
+    }
+}
+
 	
 }
 
@@ -783,7 +789,12 @@ h1, h2, h3, p, #nav li {
 	#copyright {
 		clear: both;
 	}
-	
+
+        #colophon figure.item {
+             width: @4cols;
+             margin: 8/@em 12/@em 0 0;
+        }
+
 }
 
 
@@ -873,6 +884,12 @@ h1, h2, h3, p, #nav li {
 		#copyright {
 			padding-left: @gutter/@em + @4cols;
 		}
+
+        #colophon figure.item {
+             width: @3cols;
+             margin: 8/@em 18/@em 0 0;
+        }
+
 	
 }
 

@@ -7,7 +7,7 @@
                 {% with t.center as c %}
 		<figure class="item">
 		    <a href="{% url trace-object t.uuid %}">		    
-		    <img src="http://maps.googleapis.com/maps/api/staticmap?center={{ c }}&path={{ t.points }}&zoom=16&size=300x300&sensor=false" alt="{{ t }}"/>
+		    <img src="http://maps.googleapis.com/maps/api/staticmap?center={{ c }}&path={{ t.points }}&zoom=13&size=300x300&sensor=false" alt="{{ t }}"/>
                     </a>
                     <figcaption>
 			{{ t }}		    
@@ -20,8 +20,8 @@
     {% endblock %}	    
 
     {% block extra_script %}
-	<script src="{{ STATIC_URL }}js/underscore-min.js"></script>
-	<script src="{{ STATIC_URL }}js/backbone-min.js"></script>
+	<script src="{{ STATIC_URL }}js/underscore-1.3.1.js"></script>
+	<script src="{{ STATIC_URL }}js/backbone.js"></script>
 	<script src="{{ STATIC_URL }}js/gmaps.js"></script>    
 	<script type="text/javascript">
 	    $(function(){
