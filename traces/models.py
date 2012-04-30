@@ -24,7 +24,9 @@ class MongoDBTraceManager(object):
         return the_trace
         
 
-class Trace(TimeStampedModel):
+class Trace(models.Model):
+    created = models.DateTimeField(_('created'), auto_now_add=True)
+    modified = models.DateTimeField(_('modified'), auto_now=True)
     user = models.ForeignKey(User, related_name='traces', null=True, blank=True)
     # URL-friendly thread UD.
     uuid = models.CharField(max_length=8, editable=False, unique=True, db_index=True)
@@ -53,6 +55,13 @@ class Trace(TimeStampedModel):
     def __unicode__(self):
         return self.title or self.uuid
 
+    def get_start(self):
+        obj = Trace.mongo_objects.db.find_one(dict(uuid=self.uuid))
+        addresses = filter(lambda x: x.get('formatted_address', None), obj['points'])
+        if addresses:
+            return addresses[0]['formatted_address']
+
+
     def save(self, *args, **kwargs):
         if not self.uuid:
             self.uuid = str(uuid.uuid4())[:4]
@@ -61,4 +70,9 @@ class Trace(TimeStampedModel):
         except IntegrityError:
             self.uuid = None
             self.save(*args, **kwargs)
+
+    class Meta:
+        get_latest_by = 'modified'
+        ordering = ('-modified', '-created',)
+
 

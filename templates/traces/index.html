@@ -1,16 +1,21 @@
 {% extends 'traces/base.html' %}
+{% load humanize %}
+
+{% block trace_button %}start a trace{% endblock %}
+
+{% block title %}{{ city.name }} {% if city %}~{% endif %} Free GPS tracing system ~ {% endblock %}
     {% block content %}
     {% if traces %}	
 	<section id="colophon" class="clearfix">	
-	    <h2>Your road traces</h2>
+	    <h2>My Trace-Log</h2>
             {% for t in traces %}
                 {% with t.center as c %}
-		<figure class="item">
+		<figure class="item {% cycle 'col_1' 'col_2' 'col_3' 'col_4' %}">
 		    <a href="{% url trace-object t.uuid %}">		    
-		    <img src="http://maps.googleapis.com/maps/api/staticmap?center={{ c }}&path={{ t.points }}&zoom=13&size=300x300&sensor=false" alt="{{ t }}"/>
+		    <img src="http://maps.googleapis.com/maps/api/staticmap?path={{ t.points }}&size=300x300&sensor=false" alt="{{ t }}"/>
                     </a>
                     <figcaption>
-			{{ t }}		    
+			<p>{{ t.get_start|default:"" }} <i class="small">{{ t.created|naturaltime }}</i></p>
 		    </figcaption>		    
 		</figure>
                 {% endwith %}		

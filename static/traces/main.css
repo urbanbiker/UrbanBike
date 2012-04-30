@@ -152,7 +152,7 @@ img {
 body {
   font-size: 1.0625em;
   line-height: 1.411764705882353em;
-  font-family: futura-pt, Futura, "Trebuchet MS", sans-serif;
+  font-family: Futura, "Trebuchet MS", sans-serif;
 }
 .small,
 #nav span,
@@ -219,6 +219,9 @@ h3,
 h2 {
   text-transform: uppercase;
   letter-spacing: 0.06470588235294118em;
+}
+#masthead h1 a,
+h2 a {
   border-bottom: none;
 }
 #introduction h1,
@@ -235,33 +238,33 @@ h2 {
   line-height: 1.0769230769230769em;
   margin-right: 0.46153846153846156em;
   min-width: 3.230769230769231em;
-  background: #171717;
-  color: #ffffff;
+  background: #e8e8e8;
+  color: #171717;
 }
 /*
 	Colours & links
 */
 body {
-  background: #ffffff;
-  color: #252525;
+  background: #171717;
+  color: #9e9c95;
 }
 h1,
 h2,
 h3,
 h4 {
-  color: #171717;
+  color: #e8e8e8;
 }
 header p,
 #copyright p {
   color: #616161;
 }
 a {
-  color: #171717;
+  color: #e8e8e8;
   text-decoration: none;
-  border-bottom: 0.06470588235294118em solid #171717;
+  border-bottom: 0.06470588235294118em solid #e8e8e8;
 }
 #nav a {
-  border: 0.11764705882352941em solid #171717;
+  border: 0.11764705882352941em solid #e8e8e8;
 }
 #copyright a {
   color: #616161;
@@ -285,8 +288,8 @@ a:active {
   border-bottom-color: #616161;
 }
 #copyright a:active {
-  color: #171717;
-  border-bottom-color: #171717;
+  color: #e8e8e8;
+  border-bottom-color: #e8e8e8;
 }
 #nav a:active,
 #downloads a:active strong {
@@ -294,11 +297,11 @@ a:active {
 }
 ::selection {
   background: #e84c38;
-  color: #ffffff;
+  color: #171717;
 }
 ::-moz-selection {
   background: #e84c38;
-  color: #ffffff;
+  color: #171717;
 }
 img::selection {
   background: transparent;
@@ -342,10 +345,9 @@ article section,
   text-align: center;
 }
 #nav {
-  padding: 1.411764705882353em 0 0;
   height: 2.823529411764706em;
   width: 15.529411764705882em;
-  margin: 0 auto;
+  margin: 1.411764705882353em auto;
 }
 #nav li {
   list-style: none;
@@ -356,8 +358,11 @@ article section,
 #nav a {
   display: block;
   text-align: center;
-  background: #171717;
-  color: #ffffff;
+  background: #ffc300;
+  color: #171717;
+}
+#nav a:hover {
+  background: #e84c38;
 }
 #nav .icon {
   font-size: 1.6470588235294117em;
@@ -366,9 +371,6 @@ article section,
 }
 #map_canvas {
   height: 28.235294117647058em;
-}
-#masthead h1 a {
-  border-bottom: none;
 }
 #introduction {
   clear: both;
@@ -511,7 +513,7 @@ article section,
 .col20,
 .col21,
 .col22 {
-  background: #171717;
+  background: #e8e8e8;
 }
 #build figure {
   height: 15.529411764705882em;
@@ -520,7 +522,7 @@ article section,
   overflow: hidden;
 }
 #build .col {
-  background: #171717;
+  background: #e8e8e8;
   left: 0.7058823529411765em;
 }
 #fixed .col {
@@ -557,7 +559,7 @@ article section,
   position: absolute;
   bottom: 0.7058823529411765em;
   left: 35.29411764705882em;
-  background: #171717;
+  background: #e8e8e8;
   height: 0.35294117647058826em;
   width: 0.35294117647058826em;
 }
@@ -584,22 +586,29 @@ article section,
 #done .active {
   background: #e84c38;
 }
+#colophon {
+  padding-top: 1.411764705882353em;
+}
 #follow {
   padding-bottom: 1.3529411764705883em;
   border-bottom: 0.11764705882352941em dotted #e8e8e8;
-  margin-bottom: 1.3529411764705883em;
+  margin: 1.3529411764705883em 0 1.411764705882353em 0;
 }
 #colophon h2 {
-  padding: 1.3529411764705883em 0 0 0;
+  padding: 0.7058823529411765em 0 0 0;
   font-size: 1.588235294117647em;
   line-height: 1.3333333333333333em;
 }
+#colophon h3 {
+  padding: 0 0 0.7058823529411765em;
+  text-transform: uppercase;
+}
+.promo img {
+  width: 2.823529411764706em;
+  float: left;
+}
 #author {
   padding-bottom: 1.411764705882353em;
-}
-#promo p,
-#author p {
-  padding-left: 3.5294117647058822em;
 }
 #copyright {
   padding: 1.411764705882353em 0 2.823529411764706em;
@@ -686,11 +695,11 @@ article section,
     width: 15.529411764705882em;
     margin: 1.0588235294117647em 1.411764705882353em 0 0;
   }
-  img {
-    width: 100%;
-  }
-  a {
+  figure a {
     border-bottom: none;
+  }
+  figure img {
+    width: 100%;
   }
 }
 /*
@@ -719,16 +728,17 @@ article section,
   }
   .col3,
   .col21 {
-    background: #171717;
+    background: #e8e8e8;
   }
   #build figure {
     height: 11.294117647058824em;
+    display: block;
   }
   #colophon figure.item {
     position: relative;
     float: left;
     width: 11.294117647058824em;
-    margin: 0.47058823529411764em 0.7058823529411765em 0 0;
+    margin: 1.0588235294117647em 1.411764705882353em 0 0;
   }
   #colophon figure.item:hover:before {
     opacity: 0;
@@ -749,6 +759,10 @@ article section,
     -moz-transition: all 0.6s ease;
     -ms-transition: all 0.6s ease;
     transition: all 0.6s ease;
+  }
+  .col_4,
+  .col_2 {
+    margin: 1.0588235294117647em 0 0 0 !important;
   }
 }
 /*
@@ -793,7 +807,7 @@ article section,
   }
   .col4,
   .col22 {
-    background: #171717;
+    background: #e8e8e8;
   }
   article h2 {
     font-size: 1.588235294117647em;
@@ -806,18 +820,17 @@ article section,
   }
   #author,
   #promo {
-    width: 15.529411764705882em;
+    width: 32.470588235294116em;
     float: left;
   }
   #author {
-    padding: 0 1.411764705882353em 0 0;
+    padding: 1.411764705882353em 0 0 0;
   }
   #copyright {
     clear: both;
   }
   #colophon figure.item {
     width: 15.529411764705882em;
-    margin: 0.47058823529411764em 0.7058823529411765em 0 0;
   }
 }
 /*
@@ -861,7 +874,7 @@ article section,
   .col6,
   .col23,
   .col24 {
-    background: #171717;
+    background: #e8e8e8;
   }
   #build .wrapper {
     position: relative;
@@ -886,7 +899,7 @@ article section,
   #follow {
     float: left;
     width: 15.529411764705882em;
-    padding: 2.1176470588235294em 1.411764705882353em 0 0;
+    padding: 1.411764705882353em 1.411764705882353em 0 0;
     border: 0;
   }
   #follow h1 {
@@ -901,7 +914,12 @@ article section,
   }
   #colophon figure.item {
     width: 11.294117647058824em;
-    margin: 0.47058823529411764em 1.0588235294117647em 0 0;
+  }
+  .col_4 {
+    margin: 1.0588235294117647em 0 0 0 !important;
+  }
+  .col_2 {
+    margin: 1.0588235294117647em 1.411764705882353em 0 0 !important;
   }
 }
 @media screen and (min-width: 57em) and (max-width: 117.9375em) {
@@ -988,7 +1006,7 @@ article section,
   .col29,
   .col30,
   .col31 {
-    background: #171717;
+    background: #e8e8e8;
   }
   #colophon {
     clear: both;

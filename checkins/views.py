@@ -40,6 +40,7 @@ def get_location(request, default=MINSK):
     remote_addr = request.META['REMOTE_ADDR']
     if remote_addr == '127.0.0.1':
         request.session['location'] = default
+        request.session['django_timezone'] = pytz.timezone('Europe/Minsk')
         return default
 
     gi = GeoIP.open(settings.GEOIP_CITY, GeoIP.GEOIP_INDEX_CACHE | GeoIP.GEOIP_CHECK_CACHE)

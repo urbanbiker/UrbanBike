@@ -1,9 +1,12 @@
 {% extends 'traces/index.html' %}
 {% load commontags %}
+{% load tz %}
 
-{% block title %}Recording Trace{% endblock %}
-{% block h1 %}Keep moving, we're recording your GPS trace. {% endblock %}
-{% block trace_button %}continue trace{% endblock %}
+{% block title %}GPS Trace {% if fire_start %}Record {{ trace.modified|time }}{% endif %} ~ {% endblock %}
+{% block h1 %}{% if fire_start %}Keep moving, we're recording your GPS trace{% else %}{{ trace.get_start|default:"" }} ~ {{ trace.created }}{% endif %}
+{% endblock %}
+
+{% block trace_button %}resume{% endblock %}
 {% block extra_script %}
 {{ block.super }}
 <script src="{{ STATIC_URL }}js/backbone-localstorage.js"></script>

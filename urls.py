@@ -9,11 +9,12 @@ urlpatterns = patterns('',
     (r'^admin/', include(admin.site.urls)),
     (r'^instagram/', include('instagr.urls')),
     (r'^twitter/', include('twitter.urls')),
-    (r'^traces/', include('traces.urls')),                       
+    (r'^traces/', include('traces.urls')),
+    (r'checkins/', include('checkins.urls')),
     url(r'^facebook/login$', 'facebook.views.login', name='facebook-login'),
     url(r'^facebook/authentication_callback$', 'facebook.views.authentication_callback', name='facebook-callback'),
-    url(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page': '/'}, name='logout'),
-    (r'', include('checkins.urls')),
+    url(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page': '/'}, name='logout'),    
+    (r'^$', 'traces.views.index'),
 )
 
 if settings.TEMPLATE_DEBUG:

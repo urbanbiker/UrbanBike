@@ -45,7 +45,7 @@
                      this.el.find('a').css({'background': '#E84C38'});
                      this.el.find('a').hover(
                          function(){
-                             $(this).css('background', '#171717');
+                             $(this).css('background', '#FFC300');
                          },
                          function(){
                              $(this).css('background', '#E84C38');
@@ -54,14 +54,14 @@
                  } else {
                      this.status = 'off';
                      this.stop_record();
-                     this.el.find('span').text("continue trace");
-                     this.el.find('a').css({background: '#171717'});
+                     this.el.find('span').text("resume");
+                     this.el.find('a').css({background: '#FFC300'});
                      this.el.find('a').hover(
                          function(){
                              $(this).css('background', '#E84C38');
                          },
                          function(){
-                             $(this).css('background', '#171717');
+                             $(this).css('background', '#FFC300');
                          });
 
                  }

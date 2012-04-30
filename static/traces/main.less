@@ -133,7 +133,7 @@ a img, img {
 body {
 	font-size: @font-size / 16*1em;
 	line-height: @line / @em;
-	font-family: futura-pt, Futura, "Trebuchet MS", sans-serif;
+	font-family: Futura, "Trebuchet MS", sans-serif;
 }
 
 .small, #nav span, #downloads strong {
@@ -200,7 +200,9 @@ h1, #nav span, h2, h3, #nav a, #downloads strong, #promo a, #author a {
 #masthead h1, h2 {
 	text-transform: uppercase;
 	letter-spacing: 1.1/@em;
-        border-bottom: none;
+        a {
+           border-bottom: none;
+        }
 }
 
 #introduction h1, #follow h1 {
@@ -226,12 +228,14 @@ h1, #nav span, h2, h3, #nav a, #downloads strong, #promo a, #author a {
 	Colours & links
 */
 
-@body: rgb(37,37,37);
-@emphasis: rgb(23,23,23);
+
+@body: rgb(158,156,149);
+@emphasis: rgb(232,232,232);
 @aside: rgb(97,97,97);
-@background: rgb(255,255,255);
+@background: rgb(23,23,23);
 @highlight: rgb(232,232,232);
 @link: rgb(232,76,56);
+@gold: rgb(255,195,0);
 
 body {
 	background: @background;
@@ -338,10 +342,9 @@ h1, h2, h3, p, #nav li {
 }
 
 #nav {
-	padding: 24/@em 0 0;
 	height: 48/@em;
 	width: @4cols;
-	margin: 0 auto;
+	margin: 24/@em auto;
 }
 
 	#nav li {
@@ -355,8 +358,11 @@ h1, h2, h3, p, #nav li {
 	#nav a {
 		display: block;
 		text-align: center;
-  		background: @emphasis;
+  		background: @gold;
 		color: @background;
+                &:hover {
+                     background: @link;
+                }
 
 	}
 	
@@ -370,9 +376,6 @@ h1, h2, h3, p, #nav li {
   height: @7cols;
   }
 
-#masthead h1 a {
-  border-bottom: none;
-}
 
 #introduction {
 	clear: both;
@@ -524,29 +527,33 @@ h1, h2, h3, p, #nav li {
 	}
 
 #colophon {
-//	padding-top: 72/@em;
+	padding-top: 24/@em;
 }
 
 	#follow {
 		padding-bottom: 23/@em;
 		border-bottom: 2/@em dotted @highlight;
-		margin-bottom: 23/@em;
+		margin: 23/@em 0 24/@em 0;
 	}
 
 	#colophon h2 {
-		padding: 23/@em 0 0 0;
+		padding: 12/@em 0 0 0;
                 .large();
 	}
+	#colophon h3 {
+            padding: 0 0 12/@em;
+            text-transform: uppercase;
+	}
 	
-	
+        .promo img {
+		width: 48/@em;
+		float: left;
+	}
+
 	#author {
 		padding-bottom: 24/@em;
 	}
-	
-	#promo p, #author p {
-		padding-left: 60/@em;
-	}
-	
+		
 	#copyright {
 		padding: 24/@em 0 48/@em;
 	}
@@ -647,12 +654,14 @@ h1, h2, h3, p, #nav li {
              width: @4cols;
              margin: 18/@em 24/@em 0 0;
     }
-  img {
-    width: 100%;
+  figure {
+    a{
+      border-bottom: none;
+      }
+    img {
+      width: 100%;
+      }
   }
-  a{
-    border-bottom: none;
-    }
 	
 }
 
@@ -687,13 +696,15 @@ h1, h2, h3, p, #nav li {
 	
 	#build figure {
 		height: @3cols;
+                display: block;
 	}
 
         #colophon figure.item {
              position: relative;
              float:left;
              width: @3cols;
-             margin: 8/@em 12/@em 0 0;
+             margin: 18/@em 24/@em 0 0;
+             
 
              &:hover:before {
              opacity: 0;
@@ -712,8 +723,12 @@ h1, h2, h3, p, #nav li {
              bottom: 0;
              left: -30%;
              .transition(all 0.6s ease);
-    }
-}
+           }
+       }
+        .col_4, .col_2 {
+             margin: 18/@em 0 0 0 !important;    
+        }
+
 
 	
 }
@@ -778,12 +793,12 @@ h1, h2, h3, p, #nav li {
 	}
 	
 	#author, #promo {
-		width: @4cols;
+		width: @8cols;
 		float: left;
 	}
 	
 		#author {
-			padding: 0 24/@em 0 0;
+			padding: 24/@em 0 0 0;
 		}
 	
 	#copyright {
@@ -792,7 +807,7 @@ h1, h2, h3, p, #nav li {
 
         #colophon figure.item {
              width: @4cols;
-             margin: 8/@em 12/@em 0 0;
+
         }
 
 }
@@ -863,14 +878,13 @@ h1, h2, h3, p, #nav li {
 		}
 
 	#colophon {
-		//margin-top: 72/@em;
 		padding-top: 22/@em;
 	}
 		
 		#follow {
 			float: left;
 			width: @4cols;
-			padding: 36/@em 24/@em 0 0;
+			padding: 24/@em 24/@em 0 0;
 			border: 0;
 		}
 	
@@ -887,9 +901,13 @@ h1, h2, h3, p, #nav li {
 
         #colophon figure.item {
              width: @3cols;
-             margin: 8/@em 18/@em 0 0;
         }
-
+        .col_4 {
+             margin: 18/@em 0 0 0 !important;    
+        }
+        .col_2, {
+            margin: 18/@em 24/@em 0 0 !important; 
+        }
 	
 }
 
