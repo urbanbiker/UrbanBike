@@ -20,7 +20,7 @@ from annoying.decorators import render_to
 from datetime import datetime
 from continents.models import CONTINENTS
 from cities.models import City
-import GeoIP
+from pygeoip import GeoIP
 
 MINSK = [53.9, 27.566667]
 

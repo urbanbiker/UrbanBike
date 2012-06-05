@@ -13,3 +13,5 @@ media/upload
 *.bundle.css
 *.bundle.js
 .venv
+.env
+.ponyrc

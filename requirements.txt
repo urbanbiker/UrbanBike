@@ -1,4 +1,17 @@
--e git+https://github.com/ryanmark/django_facebook_oauth.git#egg=facebook
-python-instagram
-tweepy
+django
+django-extensions
 django-cities
+django-annoying
+
+pytz
+south
+tweepy
+pymongo
+pygeoip
+
+python-memcached
+python-instagram
+python-googlegeocoder
+
+-e git+https://github.com/ryanmark/django_facebook_oauth.git#egg=facebook
+-e git+https://github.com/sorl/sorl-thumbnail.git#egg=solr
